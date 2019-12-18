@@ -1,10 +1,10 @@
-#### 安装
+### 安装
 ``` js
-npm i dd-store --save
+npm i rehox --save
 ```
 
 
-#### API
+### API
 API只有三个，无使用难度
 
 * Provider 绑定store的组件，在根组件使用，仅使用一次
@@ -12,7 +12,7 @@ API只有三个，无使用难度
 * inject(name, name2, ...)(ClassComponent) 类组件组件
 
 
-#### 定义store
+### 定义store
 store通过Provider组件绑定后会自动注入state和setState属性，state用于渲染和读取，setState用于更新state。注：不要直接更改state
 ``` js
 //  stores/themeStore.js
@@ -40,7 +40,7 @@ export default new Store()
 ```
 
 
-#### 注入store，可以多个
+### 注入store，可以多个
 ``` js
 // index.js
 import React from 'react';
@@ -59,7 +59,7 @@ ReactDOM.render(
 ```
 
 
-#### 函数组件内使用
+### 函数组件内使用
 ``` js
 // components/Demo1.jsx
 
@@ -81,7 +81,7 @@ export default function () {
 ```
 
 
-#### 类组件内使用
+### 类组件内使用
 ``` js
 // components/Demo3.jsx
 import React from 'react'
@@ -108,7 +108,7 @@ export default inject('authStore', 'themeStore')(Demo3)
 ```
 
 
-#### 快捷链接
+### 快捷链接
 
 - [Demo示例](https://github.com/linjc/rehox/tree/master/demo)
 - [Github仓库](https://github.com/linjc/rehox)
