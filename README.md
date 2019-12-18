@@ -1,11 +1,25 @@
+#### 安装
+``` js
+npm i dd-store --save
+```
+
+
+#### API
+API只有三个，无使用难度
+
+* Provider 绑定store的组件，在根组件使用，仅使用一次
+* useStore(name) 函数组件使用，name：store的别名，即绑定在Provider组件上的属性名
+* inject(name, name2, ...)(ClassComponent) 类组件组件
+
 
 #### 定义store
+store通过Provider组件绑定后会自动注入state和setState属性，state用于渲染和读取，setState用于更新state。注：不要直接更改state
 ``` js
 //  stores/themeStore.js
 
 class Store {
-  // state, // store绑定到Provider后会自动注入，用于渲染和读取【默认字段，不要手动覆盖】
-  // setState, // store绑定到Provider后会自动注入，用于更新状态【默认字段，不要手动覆盖】
+  // state, // 【自动注入，不要手动覆盖】
+  // setState, //  【自动注入，不要手动覆盖】
 
   // 初始化状态，初始值在这里设置
   initialState = {
@@ -13,10 +27,12 @@ class Store {
     datas: []
   }
 
-  setName(name) {
-    const state = { ...this.state }
-    state.name = name
-    this.setState(state) // 更新state
+  setName(name) { // 更新state
+    const state = { 
+      ...this.state,
+      name
+    }
+    this.setState(state)
   }
 }
 
@@ -24,8 +40,7 @@ export default new Store()
 ```
 
 
-
-#### 入口注入store，可以多个
+#### 注入store，可以多个
 ``` js
 // index.js
 import React from 'react';
@@ -42,7 +57,6 @@ ReactDOM.render(
   document.getElementById('root')
 );
 ```
-
 
 
 #### 函数组件内使用
@@ -65,7 +79,6 @@ export default function () {
   </div>
 }
 ```
-
 
 
 #### 类组件内使用
@@ -93,3 +106,12 @@ class Demo3 extends React.Component{
 
 export default inject('authStore', 'themeStore')(Demo3)
 ```
+
+
+#### 快捷链接
+
+- [Demo示例](https://github.com/linjc/rehox/tree/master/demo)
+- [Github仓库](https://github.com/linjc/rehox)
+- [Gitee仓库](https://gitee.com/l2j2c3/rehox)
+- [NPM包地址](https://www.npmjs.com/package/rehox)
+- [Issues反馈](https://github.com/linjc/rehox/issues)
