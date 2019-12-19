@@ -1,14 +1,15 @@
 
 class Store {
+  // state, // 【自动注入，不要手动覆盖】
+  // setState, //  【自动注入，不要手动覆盖】
+  
   // 初始值在这里设置
   initialState = {
     name: 'Theme'
   }
 
   setName(name) {
-    const state = { ...this.state }
-    state.name = name || 'Theme'
-    this.setState(state)
+    this.setState({ name: name || 'Theme' })
   }
 }
 

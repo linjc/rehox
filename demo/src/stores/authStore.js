@@ -1,14 +1,15 @@
 
 class Store {
+  // state, // 【自动注入，不要手动覆盖】
+  // setState, //  【自动注入，不要手动覆盖】
+  
   // 初始值在这里设置
   initialState = {
     name: 'Auth'
   }
-  
+
   setName(data) {
-    const state = { ...this.state }
-    state.name = 'Auth' + Math.random()
-    this.setState(state)
+    this.setState({ name: 'Auth' + Math.random() })
   }
 }
 

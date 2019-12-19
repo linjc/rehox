@@ -5,15 +5,16 @@ npm i rehox --save
 
 
 ### API
-API只有三个，无使用难度
 
-* Provider 绑定store的组件，在根组件使用，仅使用一次
-* useStore(name) 函数组件使用，name：store的别名，即绑定在Provider组件上的属性名
-* inject(name, name2, ...)(ClassComponent) 类组件组件
+* Provider - 绑定store的组件，在根组件使用，仅使用一次
+* useStore(name) - 函数组件使用，返回对应store，参数name为store的别名，即绑定在Provider组件上的属性名
+* inject(name, name2, ...)(ClassComponent) - 类组件注入store，通过this.props.xxx可取到对应store
+* state - 状态值（自动绑定在store上），用于页面渲染和读取
+* setState(obj) - 更新状态函数（自动绑定在store上），只传入需要修改的状态就行，会自动与当前state合并后更新，和类组件的setState有点类似
 
 
 ### 定义store
-store通过Provider组件绑定后会自动注入state和setState属性，state用于渲染和读取，setState用于更新state。注：不要直接更改state
+在initialState定义状态字段和设置初始值，store通过Provider组件绑定后会自动注入state和setState属性，state用于渲染和读取，setState用于更新修改state。【注：状态值通过setState修改，不要直接更改state】
 ``` js
 //  stores/themeStore.js
 
@@ -24,15 +25,16 @@ class Store {
   // 初始化状态，初始值在这里设置
   initialState = {
     name: 'Theme',
-    datas: []
+    age: 10,
+    datas: [],
   }
 
-  setName(name) { // 更新state
-    const state = { 
-      ...this.state,
-      name
-    }
-    this.setState(state)
+  setName(name) {
+    this.setState({name: name})
+  }
+  
+  setAge(age) {
+    this.setState({age: age})
   }
 }
 
@@ -69,13 +71,15 @@ import { useStore } from 'rehox'
 export default function () {
   const themeStore = useStore('themeStore')
 
-  const handleChangeName = () => {
+  const handleChange = () => {
     themeStore.setName(Math.random())
+    themeStore.setAge(0 | Math.random() * 30)
   }
 
   return <div>
-    <button onClick={handleChangeName}>更改数据</button>
+    <button onClick={handleChange}>更改数据</button>
     <div>{themeStore.state.name}</div>
+    <div>{themeStore.state.age}</div>
   </div>
 }
 ```
