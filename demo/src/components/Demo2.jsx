@@ -1,19 +1,35 @@
-import React from 'react'
-import { useStore } from 'rehox'
+import React, { Component } from 'react'
+import { inject } from 'rehox'
+import useThemeStore from '../stores/useThemeStore'
+import useAuthStore from '../stores/useAuthStore'
 
-export default function () {
-  const authStore = useStore('authStore')
+class Demo3 extends Component {
 
-  const onclick = () => {
+  onclick = () => {
+    const themeStore = this.props.themeStore
+    const authStore = this.props.authStore
+    themeStore.setName()
+    themeStore.setAge()
     authStore.setName()
+    authStore.setAge()
   }
 
-  React.useEffect(() => {
-    console.log('Demo2 更新啦')
-  })
+  render() {
+    const themeStore = this.props.themeStore
+    const authStore = this.props.authStore
 
-  return <div>
-    <button onClick={onclick}>Demo2点击</button>
-    <div>{authStore.state.name}</div>
-  </div>
+    return <div>
+      <h3>类组件</h3>
+      <button onClick={this.onclick}>更改数据</button>
+      <div>{themeStore.state.name}</div>
+      <div>{themeStore.state.age}</div>
+      <div>{authStore.state.name}</div>
+      <div>{authStore.state.age}</div>
+    </div>
+  }
 }
+
+export default inject({
+  themeStore: useThemeStore,
+  authStore: useAuthStore,
+})(Demo3)

@@ -6,80 +6,60 @@ npm i rehox --save
 
 ### API
 
-* Provider - 绑定store的组件，在根组件使用，仅使用一次
-* useStore(name) - 函数组件使用，返回对应store，参数name为store的别名，即绑定在Provider组件上的属性名
-* inject(name, name2, ...)(ClassComponent) - 类组件注入store，通过this.props.xxx可取到对应store
-* state - 状态值（自动绑定在store上），用于页面渲染和读取
-* setState(obj) - 更新状态函数（自动绑定在store上），只传入需要修改的状态就行，会自动与当前state合并后更新，和类组件的setState有点类似
+* `createStore(obj))` - 创建store，实际返回一个hooks
+* `inject({ key1: useStore1, key2: useStore2 })(ClassComponent)` - 类组件注入store，key名随意取，使用this.props.xxx即可读取对应store
+* `setState(obj)` - 更新状态函数（自动绑定在store上），只传入需要修改的状态就行，会自动与当前state合并后更新
 
 
 ### 定义store
-在initialState定义状态字段和设置初始值，store通过Provider组件绑定后会自动注入state和setState属性，state用于渲染和读取，setState用于更新修改state。【注：状态值通过setState修改，不要直接更改state】
+状态定义在state上，store通过createStore创建后注入setState属性，用于更新修改state。【注：状态值通过setState修改，不要直接更改state】
 ``` js
-//  stores/themeStore.js
+import { createStore } from "rehox"
 
-class Store {
-  // state, // 【自动注入，不要手动覆盖】
-  // setState, //  【自动注入，不要手动覆盖】
+const store = {
+  // setState: Function, 【自动注入，不要手动覆盖】
 
-  // 初始化状态，初始值在这里设置
-  initialState = {
-    name: 'Theme',
-    age: 10,
-    datas: [],
-  }
+  state: {
+    name: 'Auth',
+    age: 10
+  },
 
-  setName(name) {
-    this.setState({name: name})
-  }
-  
-  setAge(age) {
-    this.setState({age: age})
-  }
+  setName() {
+    store.setState({name: 'Auth' + Math.random()})
+  },
+
+  setAge() {
+    store.setState({age: 0 | Math.random()*30})
+  },
 }
 
-export default new Store()
-```
-
-
-### 注入store，可以多个
-``` js
-// index.js
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import { Provider } from 'rehox'
-import themeStore from './stores/themeStore'
-import authStore from './stores/authStore'
-
-ReactDOM.render(
-  <Provider themeStore={themeStore} authStore={authStore}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
-);
+export default createStore(store)
 ```
 
 
 ### 函数组件内使用
 ``` js
-// components/Demo1.jsx
-
 import React from 'react'
-import { useStore } from 'rehox'
+import useThemeStore from '../stores/useThemeStore'
+import useAuthStore from '../stores/useAuthStore'
 
 export default function () {
-  const themeStore = useStore('themeStore')
+  const themeStore = useThemeStore()
+  const authStore = useAuthStore()
 
-  const handleChange = () => {
-    themeStore.setName(Math.random())
-    themeStore.setAge(0 | Math.random() * 30)
+  const onclick = () => {
+    themeStore.setName()
+    themeStore.setAge()
+    authStore.setName()
+    authStore.setAge()
   }
 
   return <div>
-    <button onClick={handleChange}>更改数据</button>
+    <button onClick={onclick}>更改数据</button>
     <div>{themeStore.state.name}</div>
     <div>{themeStore.state.age}</div>
+    <div>{authStore.state.name}</div>
+    <div>{authStore.state.age}</div>
   </div>
 }
 ```
@@ -87,28 +67,44 @@ export default function () {
 
 ### 类组件内使用
 ``` js
-// components/Demo3.jsx
-import React from 'react'
+import React, { Component } from 'react'
 import { inject } from 'rehox'
+import useThemeStore from '../stores/useThemeStore'
+import useAuthStore from '../stores/useAuthStore'
 
-class Demo3 extends React.Component{
+class Demo extends Component {
 
   onclick = () => {
-    this.props.themeStore.setName(Math.random())
+    const themeStore = this.props.themeStore
+    const authStore = this.props.authStore
+    themeStore.setName()
+    themeStore.setAge()
+    authStore.setName()
+    authStore.setAge()
   }
 
-  render () {
-    const { authStore, themeStore } = this.props
-    
+  render() {
+    const themeStore = this.props.themeStore
+    const authStore = this.props.authStore
+
     return <div>
-      <button onClick={this.onclick}>Demo3点击</button>
-      <div>{authStore.state.name}</div>
+      <button onClick={this.onclick}>更改数据</button>
       <div>{themeStore.state.name}</div>
+      <div>{themeStore.state.age}</div>
+      <div>{authStore.state.name}</div>
+      <div>{authStore.state.age}</div>
     </div>
   }
 }
-
-export default inject('authStore', 'themeStore')(Demo3)
+/*
+ * 通过inject向类组件注入store，参数为对象格式
+ * key：命名随意，用于类组件读取store：this.props.xxx
+ * useStore：通过createStore创建的store hooks
+*/
+export default inject({
+  themeStore: useThemeStore,
+  authStore: useAuthStore,
+})(Demo)
 ```
 
 

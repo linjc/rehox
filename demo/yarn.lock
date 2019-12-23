@@ -8529,10 +8529,10 @@ regjsparser@^0.6.0:
   dependencies:
     jsesc "~0.5.0"
 
-rehox@0.2.1:
-  version "0.2.1"
-  resolved "https://registry.npm.taobao.org/rehox/download/rehox-0.2.1.tgz?cache=0&sync_timestamp=1576728620650&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Frehox%2Fdownload%2Frehox-0.2.1.tgz#8dff7a9e4538275138e4f5f5e798e46409b2d8b8"
-  integrity sha1-jf96nkU4J1E45PX155jkZAmy2Lg=
+rehox@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/rehox/download/rehox-1.0.0.tgz#b98efa38764ff4ce67751bcaaaba51fbeee79dc4"
+  integrity sha1-uY76OHZP9M5ndRvKqrpR++7nncQ=
 
 relateurl@0.2.x:
   version "0.2.7"

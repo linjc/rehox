@@ -1,6 +1,6 @@
 {
   "name": "rehox",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "description": "使用Hooks实现全局多store状态管理",
   "main": "dist/index.js",
   "module": "dist/index.js",
