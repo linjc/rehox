@@ -1,21 +1,20 @@
 import React, { useReducer, useEffect } from 'react'
 
+// 创建store hooks
 export const createStore = store => {
   const events = new Set()
   const useStore = () => {
     const reducer = (state, action) => action.state
     const [state, dispatch] = useReducer(reducer, store.state)
-    const dispatchEvent = (newState) => dispatch({ type: 'default', state: newState })
+    const dispatchEvent = newState => dispatch({ type: 'default', state: newState })
     useEffect(() => {
       events.add(dispatchEvent)
-      return () => {
-        events.delete(dispatchEvent)
-      }
+      return () => events.delete(dispatchEvent)
     }, [state])
     return { ...store, state }
   }
   store.setState = (newState) => {
-    if(newState === null || typeof newState !== 'object') {
+    if (newState === null || typeof newState !== 'object') {
       console.error('setState 传参有误，请传入对象格式')
       return
     }
@@ -25,12 +24,15 @@ export const createStore = store => {
   return useStore
 }
 
+// 兼容类组件
 export const inject = stores => WrapComponent => ({ children, ...props }) => {
   const storeProps = {}
   if (stores !== null && typeof stores === 'object') {
     for (let key in stores) {
       if (typeof stores[key] === 'function') {
         storeProps[key] = stores[key]()
+      } else {
+        console.error('请传入使用createStore创建的store hooks')
       }
     }
   } else {
@@ -41,7 +43,7 @@ export const inject = stores => WrapComponent => ({ children, ...props }) => {
         key2: useStore2,
         ...
       }
-      key：命名随意，用于类组件读取store：this.props.xxx
+      key：命名随意，用于this.props.xxx取对应store
       useStore：通过createStore创建的store hooks
     `)
   }
