@@ -1,7 +1,18 @@
 import React, { useReducer, useEffect } from 'react'
 
+// 初始化store
+const initStore = store => {
+  const keys = Object.keys(store)
+  keys.forEach(key => {
+    if (typeof store[key] === 'function') {
+      store[key] = store[key].bind(store) // 将方法内的this指向store
+    }
+  })
+}
+
 // 创建store hooks
 export const createStore = store => {
+  initStore(store)
   const events = new Set()
   const useStore = () => {
     const reducer = (state, action) => action.state

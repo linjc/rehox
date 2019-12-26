@@ -7,11 +7,11 @@ const store = {
   },
 
   setName() {
-    store.setState({ name: 'Auth' + Math.random() })
+    this.setState({ name: 'Auth' + Math.random() })
   },
 
   setAge() {
-    store.setState({ age: 0 | Math.random() * 30 })
+    this.setState({ age: 0 | Math.random() * 30 })
   },
 }
 
