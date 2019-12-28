@@ -12,7 +12,8 @@ npm i rehox --save
 
 
 ### 定义store
-store是一个对象，包含状态字段和方法，store通过createStore创建后注入setState属性，用于更新修改状态
+store是一个对象，包含状态字段和方法，store通过createStore创建后注入setState方法，用于更新修改状态
+【注意：如果使用箭头函数定义方法，方法内不能使用this】
 ``` js
 import { createStore } from "rehox"
 
@@ -22,11 +23,13 @@ const store = {
   name: 'Auth',
   age: 10,
 
+  // 非箭头函数：this指向当前对象
   setName() {
-    store.setState({name: 'Auth' + Math.random()})
+    this.setState({name: 'Auth' + Math.random()})
   },
 
-  setAge() {
+  // 箭头函数内不能使用this
+  setAge: () => {
     store.setState({age: 0 | Math.random()*30})
   },
 }
