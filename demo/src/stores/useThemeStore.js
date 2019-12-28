@@ -1,10 +1,9 @@
 import { createStore } from "rehox"
 
 const store = {
-  state: {
-    name: 'Theme',
-    age: 10
-  },
+  
+  name: 'Theme',
+  age: 10,
 
   setName() {
     this.setState({ name: 'Theme' + Math.random() })

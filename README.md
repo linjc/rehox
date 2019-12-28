@@ -12,17 +12,15 @@ npm i rehox --save
 
 
 ### 定义store
-状态定义在state上，store通过createStore创建后注入setState属性，用于更新修改state。【注：状态值通过setState修改，不要直接更改state】
+store是一个对象，包含状态字段和方法，store通过createStore创建后注入setState属性，用于更新修改状态
 ``` js
 import { createStore } from "rehox"
 
 const store = {
   // setState: Function, 【自动注入，不要手动覆盖】
 
-  state: {
-    name: 'Auth',
-    age: 10
-  },
+  name: 'Auth',
+  age: 10,
 
   setName() {
     store.setState({name: 'Auth' + Math.random()})
@@ -56,10 +54,10 @@ export default function () {
 
   return <div>
     <button onClick={onclick}>更改数据</button>
-    <div>{themeStore.state.name}</div>
-    <div>{themeStore.state.age}</div>
-    <div>{authStore.state.name}</div>
-    <div>{authStore.state.age}</div>
+    <div>{themeStore.name}</div>
+    <div>{themeStore.age}</div>
+    <div>{authStore.name}</div>
+    <div>{authStore.age}</div>
   </div>
 }
 ```
@@ -89,10 +87,10 @@ class Demo extends Component {
 
     return <div>
       <button onClick={this.onclick}>更改数据</button>
-      <div>{themeStore.state.name}</div>
-      <div>{themeStore.state.age}</div>
-      <div>{authStore.state.name}</div>
-      <div>{authStore.state.age}</div>
+      <div>{themeStore.name}</div>
+      <div>{themeStore.age}</div>
+      <div>{authStore.name}</div>
+      <div>{authStore.age}</div>
     </div>
   }
 }

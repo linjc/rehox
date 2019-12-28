@@ -21,10 +21,10 @@ class Demo3 extends Component {
     return <div>
       <h3>类组件</h3>
       <button onClick={this.onclick}>更改数据</button>
-      <div>{themeStore.state.name}</div>
-      <div>{themeStore.state.age}</div>
-      <div>{authStore.state.name}</div>
-      <div>{authStore.state.age}</div>
+      <div>{themeStore.name}</div>
+      <div>{themeStore.age}</div>
+      <div>{authStore.name}</div>
+      <div>{authStore.age}</div>
     </div>
   }
 }

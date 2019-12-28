@@ -3,34 +3,41 @@ import React, { useReducer, useEffect } from 'react'
 // 初始化store
 const initStore = store => {
   const keys = Object.keys(store)
+  const state = {}
   keys.forEach(key => {
     if (typeof store[key] === 'function') {
       store[key] = store[key].bind(store) // 将方法内的this指向store
+    } else {
+      state[key] = store[key] // 提取除方法外的字段作为state
     }
   })
+  return state
 }
 
-// 创建store hooks
+// 创建store hook
 export const createStore = store => {
-  initStore(store)
   const events = new Set()
+  const storeState = initStore(store)
   const useStore = () => {
     const reducer = (state, action) => action.state
-    const [state, dispatch] = useReducer(reducer, store.state)
+    const [state, dispatch] = useReducer(reducer, storeState)
     const dispatchEvent = newState => dispatch({ type: 'default', state: newState })
     useEffect(() => {
       events.add(dispatchEvent)
-      return () => events.delete(dispatchEvent)
+      return () => {
+        events.delete(dispatchEvent)
+      }
     }, [state])
-    return { ...store, state }
+    return { ...store, ...state }
   }
   store.setState = (newState) => {
     if (newState === null || typeof newState !== 'object') {
       console.error('setState 传参有误，请传入对象格式')
       return
     }
-    const data = { ...Object.assign(store.state, newState) }
+    const data = { ...Object.assign(storeState, newState) }
     events.forEach(fn => fn(data))
+    Object.assign(store, newState) // 同步修改store内字段，用于读取最新状态
   }
   return useStore
 }
