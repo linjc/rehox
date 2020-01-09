@@ -27,7 +27,7 @@ export const createStore = store => {
       return () => {
         events.delete(dispatchEvent)
       }
-    }, [state])
+    }, [])
     return { ...store, ...state }
   }
   store.setState = (newState) => {
