@@ -4,13 +4,6 @@ npm i rehox --save
 ```
 
 
-### API
-
-* `createStore(obj))` - 创建store，实际返回一个hooks
-* `inject({ key1: useStore1, key2: useStore2 })(ClassComponent)` - 类组件注入store，key名随意取，使用this.props.xxx即可读取对应store
-* `setState(obj)` - 更新状态函数（自动绑定在store上），只传入需要修改的状态就行，会自动与当前state合并后更新
-
-
 ### 定义store
 store是一个对象，包含状态字段和方法，store通过createStore创建后注入setState方法，用于更新修改状态
 【注意：不推荐使用箭头函数定义方法，this将不是当前store对象】
