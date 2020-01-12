@@ -1,20 +1,20 @@
-const { src, watch, dest, parallel } = require('gulp')
-const babel = require('gulp-babel')
+const { watch, dest, parallel } = require('gulp')
+const ts = require("gulp-typescript")
 
 function hooks() {
-  return src('src/index.js')
-    .pipe(babel({
-      presets: ['@babel/env','@babel/preset-react']
-    }))
+  const tsProject = ts.createProject("tsconfig.json")
+  return tsProject
+    .src()
+    .pipe(tsProject())
     .pipe(dest('dist'))
 }
 
 function listen() {
-  watch('src/index.js', cb => {
+  watch('src/*', cb => {
     hooks()
     cb()
   })
 }
+
 exports.listen = parallel(hooks, listen)
-exports.hooks = hooks
 exports.default = hooks
