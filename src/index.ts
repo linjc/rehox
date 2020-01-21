@@ -16,7 +16,7 @@ const initStore = (store: Record<any, any>) => {
 }
 
 // 创建store hook
-export const createStore = (store: Record<any, any>) => {
+const createStore = (store: Record<any, any>) => {
   const events = new Set()
   const storeState = initStore(store)
   const useStore = () => {
