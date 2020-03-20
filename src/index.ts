@@ -1,29 +1,36 @@
 import { useReducer, useEffect } from 'react'
 import inject from './inject'
 
-// 初始化store
-const initStore = (store: Record<any, any>) => {
-  const keys = Object.keys(store)
-  const state: Record<any, any> = {}
-  keys.forEach(key => {
+// 初始化store方法this指向
+const initStoreActions = (store: Record<any, any>) => {
+  for (let key in store) {
     if (typeof store[key] === 'function') {
-      store[key] = store[key].bind(store) // 将方法内的this指向store
-    } else {
-      state[key] = store[key] // 提取除方法外的字段作为state
+      store[key] = store[key].bind(store)
     }
-  })
+  }
+}
+
+// 获取store状态
+const getStoreState = (store: Record<any, any>) => {
+  const state: Record<any, any> = {}
+  for (let key in store) {
+    if (typeof store[key] !== 'function') {
+      state[key] = store[key]
+    }
+  }
   return state
 }
 
 // 创建store hook
 const createStore = (store: Record<any, any>) => {
+  initStoreActions(store)
   const events = new Set()
-  const storeState = initStore(store)
+  let storeState = getStoreState(store)
   const useStore = () => {
     const reducer = (state: any, action: any) => action.state
     const [state, dispatch] = useReducer(reducer, storeState)
-    const dispatchEvent = (newState: any) => dispatch({ type: 'default', state: newState })
     useEffect(() => {
+      const dispatchEvent = (newState: any) => dispatch({ type: 'default', state: newState })
       events.add(dispatchEvent)
       return () => {
         events.delete(dispatchEvent)
@@ -37,10 +44,12 @@ const createStore = (store: Record<any, any>) => {
       return
     }
     Object.assign(store, newState) // 同步修改store内字段，用于读取最新状态
-    const data = { ...Object.assign(storeState, newState) }
-    events.forEach((fn: Function) => fn(data))
+    storeState = getStoreState(store)
+    events.forEach((fn: Function) => fn(storeState))
   }
   return useStore
 }
+
+export { createStore, inject }
 
 export default { createStore, inject }

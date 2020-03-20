@@ -1,6 +1,6 @@
 {
   "name": "rehox",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "使用Hooks实现react全局多store状态管理",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -32,13 +32,13 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@types/jest": "^24.0.25",
-    "@types/node": "^13.1.6",
-    "@types/react": "^16.9.17",
-    "@types/react-dom": "^16.9.4",
+    "@types/jest": "^25.1.4",
+    "@types/node": "^13.9.2",
+    "@types/react": "^16.9.23",
+    "@types/react-dom": "^16.9.5",
     "gulp": "^4.0.2",
     "gulp-typescript": "^6.0.0-alpha.1",
-    "tslint": "^5.20.1",
-    "typescript": "^3.7.4"
+    "tslint": "^6.1.0",
+    "typescript": "^3.8.3"
   }
 }
