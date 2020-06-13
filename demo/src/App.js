@@ -4,7 +4,7 @@ import Demo2 from './components/Demo2'
 
 function App() {
   return (
-    <div>
+    <div style={{display: 'flex'}}>
       <Demo />
       <Demo2 />
     </div>

@@ -1,24 +1,39 @@
 import React from 'react'
-import useThemeStore from '../stores/useThemeStore'
-import useAuthStore from '../stores/useAuthStore'
+import useUIStore from '../stores/useUIStore'
+import useUserStore from '../stores/useUserStore'
 
 export default function () {
-  const themeStore = useThemeStore()
-  const authStore = useAuthStore()
 
-  const onclick = () => {
-    themeStore.setName()
-    themeStore.setAge()
-    authStore.setName()
-    authStore.setAge()
+  const {
+    name,
+    deptName,
+    corpName,
+    onChangeUserInfo,
+  } = useUserStore()
+
+  const {
+    setState: setUIState,
+    language,
+    theme,
+    onChangeLang
+  } = useUIStore()
+
+  const handleChangeUI = () => {
+    onChangeLang()
+    setUIState({
+      theme: '#' + Math.random().toString(16).slice(-6)
+    })
   }
 
-  return <div>
+  return <div style={{marginLeft: 20, width: 360}}>
     <h3>函数组件</h3>
-    <button onClick={onclick}>更改数据</button>
-    <div>{themeStore.name}</div>
-    <div>{themeStore.age}</div>
-    <div>{authStore.name}</div>
-    <div>{authStore.age}</div>
+    <button onClick={onChangeUserInfo}>更改用户</button>
+    <div>姓名：{name}</div>
+    <div>公司：{corpName}</div>
+    <div>部门：{deptName}</div>
+    <br />
+    <button onClick={handleChangeUI}>更改UI</button>
+    <div>语言：{language}</div>
+    <div>主题：{theme}</div>
   </div>
 }
