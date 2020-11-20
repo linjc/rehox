@@ -2,27 +2,6 @@
   "name": "rehox-demo",
   "version": "0.1.0",
   "description": "使用rehox实现全局多store状态管理",
-  "author": {
-    "name": "linjc",
-    "url": "https://github.com/linjc"
-  },
-  "keywords": [
-    "rehox",
-    "react",
-    "redux",
-    "mobx",
-    "flux",
-    "状态管理"
-  ],
-  "homepage": "https://github.com/linjc/rehox",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/linjc/rehox.git"
-  },
-  "bugs": {
-    "url": "https://github.com/linjc/rehox/issues"
-  },
-  "license": "MIT",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -30,7 +9,7 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-scripts": "3.4.0",
-    "rehox": "1.5.0"
+    "rehox": "1.6.0"
   },
   "scripts": {
     "start": "react-scripts start",

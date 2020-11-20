@@ -1,13 +1,21 @@
 {
   "name": "rehox",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "使用Hooks实现react全局多store状态管理",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "browser": "dist/index.umd.js",
+  "types": "dist/index.d.ts",
   "author": {
     "name": "linjc",
     "url": "https://github.com/linjc"
   },
+  "files": [
+    "dist",
+    "lib",
+    "es",
+    "README.md"
+  ],
   "keywords": [
     "rehox",
     "react",
@@ -26,19 +34,14 @@
   },
   "license": "MIT",
   "scripts": {
-    "start": "gulp listen",
-    "dev": "gulp listen",
-    "build": "gulp"
+    "watch": "father-build --watch",
+    "build": "father-build"
   },
-  "dependencies": {},
   "devDependencies": {
-    "@types/jest": "^25.1.4",
-    "@types/node": "^13.9.2",
-    "@types/react": "^16.9.23",
-    "@types/react-dom": "^16.9.5",
-    "gulp": "^4.0.2",
-    "gulp-typescript": "^6.0.0-alpha.1",
-    "tslint": "^6.1.0",
-    "typescript": "^3.8.3"
+    "@types/react": "^16.9.56",
+    "father-build": "^1.18.5"
+  },
+  "peerDependencies": {
+    "react": "*"
   }
 }

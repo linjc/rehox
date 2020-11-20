@@ -12,7 +12,7 @@ export default function () {
   } = useUserStore()
 
   const {
-    setState: setUIState,
+    update: updateUIState,
     language,
     theme,
     onChangeLang
@@ -20,7 +20,7 @@ export default function () {
 
   const handleChangeUI = () => {
     onChangeLang()
-    setUIState({
+    updateUIState({
       theme: '#' + Math.random().toString(16).slice(-6)
     })
   }

@@ -4,15 +4,25 @@ export const uiStore = {
 
   language: "zh_cn",
   theme: 'red',
-  
+
   onChangeLang() {
-    this.setState({
-      language: this.language === 'en_US' ? 'zh_cn' : 'en_US'
-    })
+    this.language = this.language === 'en_US' ? 'zh_cn' : 'en_US'
+    this.update()
+    /** 或者
+      this.update({
+        language: this.language === 'en_US' ? 'zh_cn' : 'en_US'
+      })
+    */
   },
 
   setTheme(color) {
-    this.setState({ theme: color || 'blue' })
+    this.theme = color || 'blue'
+    this.update()
+    /** 或者
+      this.update({
+        theme: color || 'blue'
+      })
+    */
   },
 }
 

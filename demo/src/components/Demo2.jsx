@@ -8,7 +8,7 @@ class Demo3 extends Component {
   handleChangeUI = () => {
     const uiStore = this.props.uiStore
     uiStore.onChangeLang()
-    uiStore.setState({
+    uiStore.update({
       theme: '#' + Math.random().toString(16).slice(-6)
     })
   }
@@ -21,7 +21,7 @@ class Demo3 extends Component {
       corpName,
       onChangeUserInfo,
     } = this.props.userStore
-  
+
     const { language, theme } = this.props.uiStore
 
     return <div>
