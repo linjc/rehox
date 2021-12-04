@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import { inject } from 'rehox'
-import useUIStore from '../stores/useUIStore'
-import useUserStore from '../stores/useUserStore'
+import useUIStore, { uiStore } from '../stores/useUIStore'
+import useUserStore, { userStore } from '../stores/useUserStore'
 
 class Demo3 extends Component {
 
   handleChangeUI = () => {
-    const uiStore = this.props.uiStore
     uiStore.onChangeLang()
     uiStore.update({
       theme: '#' + Math.random().toString(16).slice(-6)
@@ -20,9 +19,9 @@ class Demo3 extends Component {
       deptName,
       corpName,
       onChangeUserInfo,
-    } = this.props.userStore
+    } = userStore
 
-    const { language, theme } = this.props.uiStore
+    const { language, theme } = uiStore
 
     return <div>
       <h3>类组件</h3>
