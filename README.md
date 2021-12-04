@@ -139,4 +139,3 @@ export default inject({
 - [Demo示例](./demo)
 - [Github仓库](https://github.com/linjc/rehox)
 - [Gitee仓库](https://gitee.com/l2j2c3/rehox)
-- [Issues反馈](./issues)
