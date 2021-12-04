@@ -1,14 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export type ICreateStore = (store: Record<any, any>, updateName?: string) => Function;
-
-function bindStore(store: Record<any, any>) {
-  Object.keys(store).forEach(key => {
-    if (typeof store[key] === 'function') {
-      store[key] = store[key].bind(store);
-    }
-  })
-}
+export type ICreateStore = <T>(store: T, updateName?: string) => () => T;
 
 export const createStore: ICreateStore = (store, updateName = 'update') => {
 
@@ -21,12 +13,11 @@ export const createStore: ICreateStore = (store, updateName = 'update') => {
     events.forEach(fn => fn())
   }
 
-  if (!store.setState) {
-    // setState 兼容1.6.0以前版本
-    store.setState = (data?: Record<any, any>) => store[updateName](data);
-  }
-
-  bindStore(store);
+  Object.keys(store).forEach(key => {
+    if (typeof store[key] === 'function') {
+      store[key] = store[key].bind(store);
+    }
+  })
 
   return () => {
     const [, forceUpdate] = useState({});
