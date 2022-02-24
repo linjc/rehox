@@ -30,7 +30,7 @@ export const createStore: ICreateStore = (store, updateName = 'update') => {
       };
     }, []);
 
-    return store
+    return { ...store }
   }
 }
 
