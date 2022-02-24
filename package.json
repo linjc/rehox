@@ -1,6 +1,6 @@
 {
   "name": "rehox",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "description": "使用Hooks实现react全局多store状态管理",
   "main": "lib/index.js",
   "module": "es/index.js",
