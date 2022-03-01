@@ -101,17 +101,14 @@ export default function () {
 
 
 ### 类组件内使用
+通过新建一个函数组件包裹进行中转
 ``` js
 import React, { Component } from 'react'
-import { inject } from 'rehox'
 import useStore, { store } from '../stores/useStore'
 
 class Demo extends Component {
   render() {
-
     const { name, deptName, corpName, onChangeUserInfo } = this.props.store
-    // 类组件内也可以直接使用import引入的store
-    // const { name, deptName, corpName, onChangeUserInfo } = store
  
     return <div>
       <h3>类组件</h3>
@@ -123,14 +120,13 @@ class Demo extends Component {
   }
 }
 /*
- * 通过inject向类组件注入store，参数为对象格式
- * key：自定义名称xxx，用于类组件读取：this.props.xxx
- * useStore：通过createStore创建的store hook
+ * 新建一个函数组件包裹中转
 */
-export default inject({
-  store: useStore,
-  // store1: useStore1
-})(Demo)
+export default (props = {}) => {
+  const store = useStore();
+  return <Demo {...props} store={store}  />
+}
+
 ```
 
 
